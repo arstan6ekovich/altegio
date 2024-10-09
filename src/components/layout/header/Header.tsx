@@ -7,9 +7,11 @@ import { MdLanguage } from "react-icons/md";
 import { GoChevronDown } from "react-icons/go";
 import { GoChevronUp } from "react-icons/go";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const [language, setLanguage] = useState<boolean>(false);
+  const route = useRouter();
   return (
     <header
       id={scss.Header}
@@ -35,8 +37,18 @@ const Header = () => {
               <MdLanguage />
               {language ? <GoChevronUp /> : <GoChevronDown />}
             </button>
-            <button className={scss.sign_in}>SIGN IN</button>
-            <button className={scss.try_days}>TRY 7 DAYS FREE</button>
+            <button
+              className={scss.sign_in}
+              onClick={() => route.push("/auth/signin")}
+            >
+              SIGN IN
+            </button>
+            <button
+              className={scss.try_days}
+              onClick={() => route.push("/auth/signup")}
+            >
+              TRY 7 DAYS FREE
+            </button>
           </div>
         </div>
       </div>

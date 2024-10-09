@@ -1,0 +1,111 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px auto;
+    width: 400px;
+  }
+  
+  .logo {
+    margin-bottom: 20px;
+  
+    img {
+      width: 100px;
+    }
+  }
+  
+  .form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      font-size: 14px;
+      color: #333;
+    }
+  
+    .input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      box-sizing: border-box;
+  
+      &:focus {
+        border-color: #000;
+        outline: none;
+      }
+    }
+  }
+  
+  .showPassword {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  
+    input {
+      margin-right: 10px;
+    }
+  }
+  
+  .forgotPassword {
+    text-align: right;
+    margin-bottom: 20px;
+  
+    a {
+      color: #000;
+      font-size: 14px;
+      text-decoration: none;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffcc00;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #e6b800;
+    }
+  }
+  
+  .registrationLink {
+    margin-top: 10px;
+    text-align: center;
+  
+    a {
+      color: #000;
+      font-size: 14px;
+      text-decoration: none;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
