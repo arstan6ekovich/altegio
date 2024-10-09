@@ -1,7 +1,7 @@
-import HomePage from "@/components/pages/HomePage/HomePage";
+import Layout from "@/components/layout/Layout";
 
 const page = () => {
-  return <HomePage />;
+  return <Layout />;
 };
 
 export default page;

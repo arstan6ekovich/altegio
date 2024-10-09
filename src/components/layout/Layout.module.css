@@ -1,0 +1,9 @@
+#Layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+}
+#Layout footer {
+  margin-top: auto;
+}/*# sourceMappingURL=Layout.module.css.map */

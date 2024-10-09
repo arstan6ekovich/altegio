@@ -1,0 +1,83 @@
+#Header {
+  background: #262b2b;
+  padding: 25px 0;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 25px 0 25px 20px;
+  z-index: 101;
+  position: sticky;
+  top: 0;
+  left: 0;
+  .Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .Header_left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      img {
+        width: 140px;
+        height: 40px;
+      }
+      a {
+        color: white;
+      }
+    }
+    .Header_right {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      .sign_in {
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        line-height: 20px;
+        fill: #fff;
+        color: #fff;
+        background-color: #00000000;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #fff;
+        border-radius: 4px 4px 4px 4px;
+        padding: 10px 15px;
+      }
+      .sign_in:hover {
+        color: #262b2b;
+        background-color: white;
+      }
+      .try_days {
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        line-height: 20px;
+        fill: #2b3134;
+        color: #2b3134;
+        background-color: #fff;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #fff;
+        border-radius: 4px 4px 4px 4px;
+        padding: 10px 15px;
+      }
+      .try_days:hover {
+        background-color: #00000000;
+        color: #fff;
+      }
+      .language {
+        font-size: 20px;
+        color: white;
+        background: 0;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+}

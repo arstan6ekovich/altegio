@@ -8,11 +8,7 @@ interface LayoutClientType {
 }
 
 const LayoutClient: FC<LayoutClientType> = ({ children }) => {
-  return (
-    <SessionProvider>
-      <Layout>{children}</Layout>
-    </SessionProvider>
-  );
+  return <SessionProvider>{children}</SessionProvider>;
 };
 
 export default LayoutClient;

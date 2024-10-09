@@ -1,10 +1,10 @@
-import ServisePage from "../servicePage/ServicePage";
+import Boost from "./Boost/Boost";
 import scss from "./HomePage.module.scss";
 
 const HomePage = () => {
   return (
     <div>
-      <ServisePage />
+      <Boost />
     </div>
   );
 };
