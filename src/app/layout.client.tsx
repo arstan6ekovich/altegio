@@ -1,5 +1,4 @@
 "use client";
-import Layout from "@/components/layout/Layout";
 import SessionProvider from "@/provider/SessionProvider";
 import React, { FC, ReactNode } from "react";
 

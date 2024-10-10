@@ -29,7 +29,6 @@ const AdvancedSettings = () => {
       const response = await axios.post(`${altegio}`, updatedFormData);
       setProduct(response.data);
       console.log("Response data:", response.data);
-
       reset();
       setCount(0);
     } catch (error) {
