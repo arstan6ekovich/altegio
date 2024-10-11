@@ -38,24 +38,27 @@ const BasicSettings = () => {
         delete dataToSend.to;
       }
 
+      // Send POST request
       const { data } = await axios.post(`${basic}`, dataToSend);
       setProduct(data);
-      console.log(data, "data");
+      console.log("Data submitted successfully:", data);
 
+      // Reset form fields and count
       reset({
         haircut: "",
         defaultOption: "By default",
         num: 0,
         hour: "1h",
         minute: "1m",
-        number: count,
+        number: 0, // Reset number to 0
         from: undefined,
         to: undefined,
       });
 
+      // Reset the count manually
       setCount(0);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error(error);
     }
   };
 
@@ -66,7 +69,7 @@ const BasicSettings = () => {
         setProduct(response.data);
         console.log("Fetched product:", response.data);
       } catch (error) {
-        console.error("Error fetching product:", error);
+        console.error(error);
       }
     };
 

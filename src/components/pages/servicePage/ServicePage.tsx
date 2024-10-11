@@ -1,21 +1,25 @@
 "use client";
 import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { IframeHTMLAttributes, useEffect, useState } from "react";
 import s from "./ServicePage.module.scss";
 import { MdMenu } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import { MdOutlineModeEdit } from "react-icons/md";
 import { FaRegUserCircle } from "react-icons/fa";
+import axios, { AxiosError } from "axios";
+import { SubmitHandler, useForm } from "react-hook-form";
+import scss from "./ServicePage.module.scss";
+const basic = process.env.NEXT_PUBLIC_ALTEGIO;
 
 const ServicePage = () => {
-  const [showCreateList, setShowCreateLit] = useState(false);
-  console.log(showCreateList, "");
+  const [showCreateList, setShowCreateList] = useState(false);
 
   const openCreateList = () => {
-    setShowCreateLit((prev) => !prev);
+    setShowCreateList((prev) => !prev);
   };
+
   return (
     <div className={s.servicePage}>
       <Navbar />
@@ -83,6 +87,44 @@ export function ServiceCategories() {
 }
 
 export function ServiceCategoryLists() {
+  interface IFormInput {
+    _id: number;
+    firstName: string;
+    lastName: string;
+    age: number;
+    defaultOption: string;
+    secondOption: string;
+    locationSettings: string;
+    number: number;
+  }
+  const [product, setProduct] = useState<IFormInput[]>([]);
+  const [isEdit, setIsEdit] = useState<number | null>(null);
+  const { register, handleSubmit } = useForm<IFormInput>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(basic!);
+        setProduct(response.data);
+        console.log("Fetched data: ", response.data);
+      } catch (e) {
+        const error = e as AxiosError;
+        console.log(error.response?.data);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    try {
+      const { data: response } = await axios.patch(`${basic}/${isEdit}`, data);
+      setProduct(response);
+      setIsEdit(null);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className={s.serviceCategoryLists}>
       <div className={s.serviceCategoryListsHead}>
@@ -96,29 +138,99 @@ export function ServiceCategoryLists() {
         </div>
       </div>
       <div className={s.categotyLists}>
-        <div className={s.categoryList}>
-          <div className={s.categoryListName}>
-            <MdMenu />
-            <h2>Tina</h2>
-          </div>
-          <div className={s.categoryListContent}>
-            <div className={s.categoryBook}>
-              <div className={s.categoryBookCheck}>
-                <div className={s.categoryBookCheckBox}></div>
+        {product.map((item) => (
+          <>
+            {isEdit === item._id ? (
+              <>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className={scss.form_mathers}>
+                    <div className={scss.form_inputs}>
+                      <h1>Name on bill</h1>
+                      <input
+                        {...register("firstName", { required: true })}
+                        placeholder="First Name"
+                      />
+                    </div>
+
+                    <div className={scss.form_inputs}>
+                      <h1>Taxation system</h1>
+                      <select
+                        {...register("defaultOption", { required: true })}
+                        defaultValue="By default"
+                      >
+                        <option value="By default">By default</option>
+                      </select>
+                    </div>
+
+                    <div className={scss.form_inputs}>
+                      <h1>VAT</h1>
+                      <select
+                        {...register("secondOption", { required: true })}
+                        defaultValue="By default"
+                      >
+                        <option value="By default">By default</option>
+                      </select>
+                    </div>
+                    <div className={scss.form_inputs}>
+                      <h1>Return visit notification</h1>
+                      <select
+                        {...register("locationSettings", { required: true })}
+                        defaultValue="Use general location settings"
+                      >
+                        <option value="Use general location settings">
+                          Use general location settings
+                        </option>
+                        <option value="Do not send after the visit">
+                          Do not send after the visit
+                        </option>
+                        <option value="1 day after the visit">
+                          1 day after the visit
+                        </option>
+                        <option value="2 day after the visit">
+                          2 days after the visit
+                        </option>
+                        <option value="3 day after the visit">
+                          3 days after the visit
+                        </option>
+                      </select>
+                    </div>
+                    <input type="hidden" {...register("number")} />
+                    <div className={scss.form_buttons}>
+                      <button type="button"> add </button>
+                      <h1>Automatic debiting from memberships</h1>
+
+                      <button type="submit">create</button>
+                    </div>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <div className={s.categoryList}>
+                <div className={s.categoryListName}>
+                  <MdMenu />
+                  <h2>{item.firstName}</h2>
+                </div>
+                <div className={s.categoryListContent}>
+                  <div className={s.categoryBook}>
+                    <div className={s.categoryBookCheck}>
+                      <div className={s.categoryBookCheckBox}></div>
+                    </div>
+                    <span>На</span>
+                  </div>
+                  <h3>{item.number} сом</h3>
+                  <h3>1ч 0м</h3>
+                  <h4>Не Указано</h4>
+                  <span>
+                    <FaRegUserCircle />
+                  </span>
+                  <span onClick={() => setIsEdit(item._id)}>
+                    <MdOutlineModeEdit />
+                  </span>
+                </div>
               </div>
-              <span>На</span>
-            </div>
-            <h3>200 сом</h3>
-            <h3>1ч 0м</h3>
-            <h4>Не Указано</h4>
-            <span>
-              <FaRegUserCircle />
-            </span>
-            <span>
-              <MdOutlineModeEdit />
-            </span>
-          </div>
-        </div>
+            )}
+          </>
+        ))}
       </div>
       <button className={s.addService}>
         <Link href="/service/servicepage/advancedsettings">
