@@ -11,6 +11,9 @@ import { FaRegUserCircle } from "react-icons/fa";
 import axios, { AxiosError } from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import scss from "./ServicePage.module.scss";
+import { useDispatch } from "react-redux";
+import { AddTrue } from "@/redux/slices/ProductSlice";
+import { useAppSelector } from "@/redux/store";
 const basic = process.env.NEXT_PUBLIC_ALTEGIO;
 
 const ServicePage = () => {
@@ -67,6 +70,9 @@ const ServicePage = () => {
 
 export function ServiceCategories() {
   const [product, setProduct] = useState([]);
+  const [mar, setMar] = useState(false);
+  const dispatch = useDispatch();
+  dispatch(AddTrue(mar));
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -79,12 +85,17 @@ export function ServiceCategories() {
     fetchData();
   }, []);
   return (
-    <div className={s.serviceCategories}>
+    <div className={s.serviceCategories} onClick={() => setMar(!mar)}>
       <div className={s.serviceCategory}>
         <div className={s.serviceCategoriesOpen}>
-          <IoIosArrowDown />
+          <IoIosArrowDown
+            style={{
+              transform: mar ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.3s ease",
+            }}
+          />
           <div className={s.serviceCategoriesTitle}>
-            <h3>Тинатин</h3>
+            <h3>Mar4ik</h3>
             <h4>Содержить услуги: {product.length}</h4>
           </div>
         </div>
@@ -93,7 +104,7 @@ export function ServiceCategories() {
           <MdMenu />
         </div>
       </div>
-      <ServiceCategoryLists />
+      {mar && <ServiceCategoryLists />}
     </div>
   );
 }
@@ -112,6 +123,8 @@ export function ServiceCategoryLists() {
   const [product, setProduct] = useState<IFormInput[]>([]);
   const [isEdit, setIsEdit] = useState<number | null>(null);
   const { register, handleSubmit } = useForm<IFormInput>();
+  const { treu } = useAppSelector((s) => s.main);
+  console.log(treu, "true");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -212,12 +225,18 @@ export function ServiceCategoryLists() {
                       <h1>Automatic debiting from memberships</h1>
 
                       <button type="submit">create</button>
+                      <button onClick={() => setIsEdit(null)}>Cancel</button>
                     </div>
                   </div>
                 </form>
               </>
             ) : (
-              <div className={s.categoryList}>
+              <div
+                className={s.categoryList}
+                style={{
+                  display: treu ? "flex" : "none",
+                }}
+              >
                 <div className={s.categoryListName}>
                   <MdMenu />
                   <h2>{item.firstName}</h2>
@@ -244,7 +263,12 @@ export function ServiceCategoryLists() {
           </>
         ))}
       </div>
-      <button className={s.addService}>
+      <button
+        className={s.addService}
+        style={{
+          display: treu ? "flex" : "none",
+        }}
+      >
         <Link href="/service/servicepage/advancedsettings">
           + Добавить услуги
         </Link>

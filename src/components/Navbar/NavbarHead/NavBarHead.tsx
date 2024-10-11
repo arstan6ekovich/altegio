@@ -10,7 +10,7 @@ const NavBarHead = () => {
         <div className={s.navbarHeadTitleIcon}>
           <TfiVimeoAlt />
         </div>
-        <h3>Tina</h3>
+        <h3>Mar4ik</h3>
       </div>
       <IoMdNotificationsOutline />
     </div>
