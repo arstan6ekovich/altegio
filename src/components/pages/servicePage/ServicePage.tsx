@@ -85,9 +85,9 @@ export function ServiceCategories() {
     fetchData();
   }, []);
   return (
-    <div className={s.serviceCategories} onClick={() => setMar(!mar)}>
+    <div className={s.serviceCategories}>
       <div className={s.serviceCategory}>
-        <div className={s.serviceCategoriesOpen}>
+        <div className={s.serviceCategoriesOpen} onClick={() => setMar(!mar)}>
           <IoIosArrowDown
             style={{
               transform: mar ? "rotate(180deg)" : "rotate(0deg)",
