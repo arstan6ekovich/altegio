@@ -1,0 +1,262 @@
+.servicePage {
+  display: flex;
+  .mainServicePage {
+    width: 95%;
+    .headServicePage {
+      display: flex;
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      align-items: center;
+      gap: 10px;
+      .serviceBurger {
+        width: 36px;
+        height: 36px;
+        border: 2px solid #e0e3eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: 22px;
+      }
+      .headServiceTitle {
+        h1 {
+          font-size: 24px;
+          font-weight: 400;
+          color: #2b3134;
+          margin-bottom: 8px;
+        }
+        h4 {
+          font-size: 12px;
+          color: #71757f;
+          font-weight: 500;
+        }
+      }
+    }
+    .servicePageCategories {
+      width: 100%;
+      .serviceSearch {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 40px 20px;
+        .serviceSearchInput {
+          position: relative;
+          width: 85%;
+          input {
+            font-weight: 400;
+            width: 100%;
+            padding: 15px 20px;
+            color: rgba(0, 0, 0, 0.87);
+            outline: none;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 1px solid #ced1d6;
+            ::placeholder {
+              color: #ced1d6;
+            }
+          }
+          svg {
+            position: absolute;
+            top: 15px;
+            color: #2b3134;
+            right: -19px;
+            font-size: 22px;
+          }
+        }
+        .createService {
+          position: relative;
+          button {
+            background: #ffcb00;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+            cursor: pointer;
+          }
+          .createServiceCard {
+            position: absolute;
+            list-style: none;
+            right: 0px;
+            top: 50px;
+            width: 243px;
+            display: flex;
+            padding: 10px;
+            flex-direction: column;
+            box-shadow: 0 6px 24px 0 rgba(0, 29, 102, 0.16);
+            border-radius: 8px;
+            background-color: white;
+            li {
+              padding: 20px 22px;
+              font-size: 14px;
+              border-radius: 12px;
+              cursor: pointer;
+              transition: 0.3s;
+            }
+            :hover {
+              background: #e0e2e6;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.serviceCategories {
+  margin: 20px;
+  .serviceCategory {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f7f9fc;
+    border-radius: 12px;
+    padding: 20px;
+    .serviceCategoriesOpen {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      .serviceCategoriesTitle {
+        h3 {
+          margin-bottom: 6px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #2b3134;
+        }
+        h4 {
+          font-size: 12px;
+          font-weight: 400;
+          color: #bec3c5;
+        }
+      }
+    }
+    .serviceCategoriesEdit {
+      display: flex;
+      gap: 12px;
+      svg {
+        font-size: 22px;
+        color: #bec3c5;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.serviceCategoryLists {
+  padding: 30px 0;
+  .serviceCategoryListsHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 160px 0 90px;
+    h2 {
+      font-size: 12px;
+      color: #bec3c5;
+    }
+    .serviceCategoryListsHeadSet {
+      display: flex;
+      gap: 30px;
+      h2 {
+        width: 100px;
+      }
+    }
+  }
+  .categotyLists {
+    display: flex;
+    flex-direction: column;
+    .categoryList {
+      display: flex;
+      box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px 0 50px;
+      .categoryListName {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        h2 {
+          font-size: 14px;
+          font-weight: 400;
+          color: #2b3134;
+        }
+        svg {
+          color: #bec3c5;
+          font-size: 22px;
+        }
+      }
+      .categoryListContent {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        padding: 30px 0;
+      }
+      .categoryBook {
+        width: 100px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .categoryBookCheck {
+          width: 80px;
+          height: 22px;
+          background-color: #ffcb00;
+          border-radius: 12px;
+          position: relative;
+          .categoryBookCheckBox {
+            position: absolute;
+            cursor: pointer;
+            right: 3px;
+            top: 2px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+          }
+        }
+        span {
+          font-size: 14px;
+          font-weight: 400;
+          color: #2b3134;
+        }
+      }
+      h3 {
+        width: 100px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #2b3134;
+      }
+      h4 {
+        font-size: 14px;
+        font-weight: 400;
+        color: #2b3134;
+        width: 100px;
+      }
+      span {
+        width: 100px;
+        color: #bec3c5;
+        font-size: 22px;
+        cursor: pointer;
+      }
+    }
+  }
+  .addService {
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: none;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    border: 1px solid #ffcb00;
+    transition: 0.2s;
+    a {
+      color: #2b3134;
+      font-weight: 600;
+    }
+  }
+  .addService:hover {
+    background: #ffcb00;
+  }
+}

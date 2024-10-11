@@ -1,0 +1,23 @@
+.navSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.navSetting {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  span {
+    color: #999ea7;
+    cursor: pointer;
+    font-size: 25px;
+  }
+  h3 {
+    font-size: 14px;
+    font-weight: 500 !important;
+  }
+}
