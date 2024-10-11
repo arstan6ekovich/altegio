@@ -100,15 +100,16 @@ const SignIn = () => {
             </label>
           </div>
 
-          <Link href={"/service"}>
+     
             <button
+            onClick={() => route.push("/service")}
               type="submit"
               disabled={!accepted}
               className={styles.submitButton}
             >
               Sign up
             </button>
-          </Link>
+         
         </form>
       </div>
     </>

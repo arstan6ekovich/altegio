@@ -66,6 +66,18 @@ const ServicePage = () => {
 };
 
 export function ServiceCategories() {
+  const [product, setProduct] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_ALTEGIO}`);
+        setProduct(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <div className={s.serviceCategories}>
       <div className={s.serviceCategory}>
@@ -73,7 +85,7 @@ export function ServiceCategories() {
           <IoIosArrowDown />
           <div className={s.serviceCategoriesTitle}>
             <h3>Тинатин</h3>
-            <h4>Содержить услуги: 1</h4>
+            <h4>Содержить услуги: {product.length}</h4>
           </div>
         </div>
         <div className={s.serviceCategoriesEdit}>
