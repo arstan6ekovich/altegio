@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { IoIosArrowForward, IoIosArrowBack  } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -18,7 +18,7 @@ const CalendarSwiper = () => {
     new Date().getFullYear()
   );
 
-  const swiperRef = useRef<SwiperCore | null>(null); 
+  const swiperRef = useRef<SwiperCore | null>(null);
 
   const months: string[] = [
     "January",
@@ -73,11 +73,14 @@ const CalendarSwiper = () => {
   return (
     <div className={s.calendarSwiper}>
       <div className={s.calendarTitle}>
-        <button className={s.calendarTitleBtn} onClick={handlePrevSlide}><IoIosArrowBack /></button>
+        <button className={s.calendarTitleBtn} onClick={handlePrevSlide}>
+          <IoIosArrowBack />
+        </button>
         <h1 className={s.title}>
           {months[currentMonth]} {currentYear}
         </h1>
-        <button className={s.calendarTitleBtn} onClick={handleNextSlide}><IoIosArrowForward />
+        <button className={s.calendarTitleBtn} onClick={handleNextSlide}>
+          <IoIosArrowForward />
         </button>
       </div>
 
@@ -85,7 +88,7 @@ const CalendarSwiper = () => {
         spaceBetween={50}
         slidesPerView={1}
         onSwiper={(swiper) => {
-          swiperRef.current = swiper; 
+          swiperRef.current = swiper;
         }}
         onSlideChange={(swiper) => {
           const newMonth = swiper.realIndex % 12;
