@@ -12,16 +12,49 @@ import axios, { AxiosError } from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import scss from "./ServicePage.module.scss";
 import { useDispatch } from "react-redux";
-import { AddTrue } from "@/redux/slices/ProductSlice";
+import { AddSearch, AddTrue } from "@/redux/slices/ProductSlice";
 import { useAppSelector } from "@/redux/store";
 const basic = process.env.NEXT_PUBLIC_ALTEGIO;
 
 const ServicePage = () => {
   const [showCreateList, setShowCreateList] = useState(false);
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [product, setProduct] = useState<IFormInput[]>([]);
+  const dispatch = useDispatch();
   const openCreateList = () => {
     setShowCreateList((prev) => !prev);
   };
+  interface IFormInput {
+    _id: number;
+    firstName: string;
+    lastName: string;
+    age: number;
+    defaultOption: string;
+    secondOption: string;
+    locationSettings: string;
+    number: number;
+  }
+  useEffect(() => {
+    async function fetchProduct() {
+      try {
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_ALTEGIO}`);
+        setProduct(data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchProduct();
+  }, []);
+
+  const handleSearchChange = (e: any) => {
+    setSearchTerm(e.target.value.toLowerCase());
+  };
+
+  const filteredProducts = product.filter((el) =>
+    el.firstName.toLowerCase().includes(searchTerm)
+  );
+
+  dispatch(AddSearch(filteredProducts));
 
   return (
     <div className={s.servicePage}>
@@ -39,7 +72,11 @@ const ServicePage = () => {
         <div className={s.servicePageCategories}>
           <div className={s.serviceSearch}>
             <div className={s.serviceSearchInput}>
-              <input type="text" placeholder="Название услуги" />
+              <input
+                type="text"
+                placeholder="Название услуги"
+                onChange={handleSearchChange}
+              />
               <IoSearchOutline />
             </div>
             <div className={s.createService}>
@@ -123,8 +160,7 @@ export function ServiceCategoryLists() {
   const [product, setProduct] = useState<IFormInput[]>([]);
   const [isEdit, setIsEdit] = useState<number | null>(null);
   const { register, handleSubmit } = useForm<IFormInput>();
-  const { treu } = useAppSelector((s) => s.main);
-  console.log(treu, "true");
+  const { treu, search } = useAppSelector((s) => s.main);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -163,7 +199,7 @@ export function ServiceCategoryLists() {
         </div>
       </div>
       <div className={s.categotyLists}>
-        {product.map((item) => (
+        {search.map((item) => (
           <>
             {isEdit === item._id ? (
               <>
@@ -263,16 +299,27 @@ export function ServiceCategoryLists() {
           </>
         ))}
       </div>
-      <button
-        className={s.addService}
-        style={{
-          display: treu ? "flex" : "none",
-        }}
-      >
-        <Link href="/service/servicepage/advancedsettings">
-          + Добавить услуги
-        </Link>
-      </button>
+      {search.length === 0 ? (
+        <h1
+          style={{
+            textAlign: "center",
+            padding: "50px 0",
+          }}
+        >
+          Нет такое данные
+        </h1>
+      ) : (
+        <button
+          className={s.addService}
+          style={{
+            display: treu ? "flex" : "none",
+          }}
+        >
+          <Link href="/service/servicepage/advancedsettings">
+            + Добавить услуги
+          </Link>
+        </button>
+      )}
     </div>
   );
 }

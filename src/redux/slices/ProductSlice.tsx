@@ -1,8 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface IFormInput {
+  _id: number;
+  firstName: string;
+  lastName: string;
+  age: number;
+  defaultOption: string;
+  secondOption: string;
+  locationSettings: string;
+  number: number;
+}
+interface searchType {
+  search: IFormInput[];
+  product: any;
+  treu: boolean;
+}
+const initialState: searchType = {
   product: [],
   treu: !false,
+  search: [],
 };
 
 export const ProductSlice = createSlice({
@@ -15,8 +31,11 @@ export const ProductSlice = createSlice({
     AddTrue(state: any, action) {
       state.treu = action.payload;
     },
+    AddSearch(state: any, action) {
+      state.search = action.payload;
+    },
   },
 });
 
-export const { AddProduct, AddTrue } = ProductSlice.actions;
+export const { AddProduct, AddTrue, AddSearch } = ProductSlice.actions;
 export default ProductSlice.reducer;
