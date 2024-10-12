@@ -77,7 +77,7 @@ const BasicSettings = () => {
   return (
     <div className={scss.start}>
       <Navbar />
-      <div>
+      <div className="container">
         <section className={scss.headerNav}>
           <div className="container">
             <p>Основные настройки</p>
