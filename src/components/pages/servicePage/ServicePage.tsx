@@ -13,7 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import scss from "./ServicePage.module.scss";
 import { useDispatch } from "react-redux";
 import { AddSearch, AddTrue } from "@/redux/slices/ProductSlice";
-import { useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 const basic = process.env.NEXT_PUBLIC_ALTEGIO;
 
 const ServicePage = () => {
@@ -186,12 +186,13 @@ export function ServiceCategoryLists() {
   const [isEdit, setIsEdit] = useState<number | null>(null);
   const { register, handleSubmit } = useForm<IFormInput>();
   const { treu, search } = useAppSelector((s) => s.main);
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(basic!);
         setProduct(response.data);
+        dispatch((response.data));
         console.log("Fetched data: ", response.data);
       } catch (e) {
         const error = e as AxiosError;
