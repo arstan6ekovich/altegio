@@ -8,13 +8,14 @@ import registerImage from "@/assets/images/signin_img.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import axios, { AxiosError } from "axios";
 
 interface IInputComponentProps {
-  name?: string;
-  placeholder?: string;
-  value: string;
-  handleChange: (value: string) => void;
-  required?: boolean;
+  email: string;
+  password: string;
+  username: string;
+  photo: string;
 }
 
 const SignIn = () => {
@@ -22,25 +23,24 @@ const SignIn = () => {
   const [accepted, setAccepted] = useState(false);
   const [value, setValue] = useState("");
   const route = useRouter();
+  const { register, handleSubmit } = useForm<IInputComponentProps>();
 
-  const handlePhoneInputChange = (value: string) => {
-    setValue(value);
-  };
-
-  const PhoneInputComponent = ({
-    name = "phone",
-    placeholder = "Phone number",
-    value,
-    handleChange,
-  }: IInputComponentProps) => (
-    <PhoneInput
-      defaultCountry="kg"
-      value={value}
-      onChange={handleChange}
-      className={"phone-input"}
-      placeholder={placeholder}
-    />
+  const PhoneInputComponent = ({}: IInputComponentProps) => (
+    <PhoneInput defaultCountry="kg" value={value} className={"phone-input"} />
   );
+
+  const onSubmit: SubmitHandler<IInputComponentProps> = async (data) => {
+    try {
+      const { data: responseData } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/auth/sign-up`,
+        data
+      );
+      console.log(responseData);
+    } catch (e) {
+      const error = e as AxiosError;
+      console.log(error.response?.data);
+    }
+  };
 
   return (
     <>
@@ -54,7 +54,7 @@ const SignIn = () => {
         <hr />
       </header>
       <div className={styles.container}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <h1>Registration</h1>
           {/* <label htmlFor="phone">Mobile phone</label>
         <InputMask
@@ -66,18 +66,36 @@ const SignIn = () => {
         </InputMask> */}
           <small>This number will be used as your login</small>
 
-          <PhoneInputComponent
-            value={value}
-            handleChange={handlePhoneInputChange}
-          />
+          {/* <PhoneInputComponent {...register("email", { required: true })} /> */}
 
           <label htmlFor="email">Email</label>
           <input
             id="email"
             type="email"
             placeholder="Email"
+            {...register("email", { required: true })}
             className={styles.input}
-            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            id="email"
+            type="text"
+            placeholder="Password"
+            className={styles.input}
+            {...register("password", { required: true })}
+          />
+          <input
+            id="email"
+            type="text"
+            placeholder="UserName"
+            className={styles.input}
+            {...register("username", { required: true })}
+          />
+          <input
+            id="email"
+            type="text"
+            placeholder="User Photo"
+            className={styles.input}
+            {...register("photo", { required: true })}
           />
           <small>Password will be sent to this email</small>
 
@@ -100,16 +118,9 @@ const SignIn = () => {
             </label>
           </div>
 
-     
-            <button
-            onClick={() => route.push("/service")}
-              type="submit"
-              disabled={!accepted}
-              className={styles.submitButton}
-            >
-              Sign up
-            </button>
-         
+          <button type="submit" className={styles.submitButton}>
+            Sign up
+          </button>
         </form>
       </div>
     </>
