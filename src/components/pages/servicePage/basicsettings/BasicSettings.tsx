@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import scss from "./BasicSettings.module.scss";
+import Navbar from "@/components/Navbar/Navbar";
 
 interface IFormInput {
   haircut: string;
@@ -38,27 +39,24 @@ const BasicSettings = () => {
         delete dataToSend.to;
       }
 
-      // Send POST request
       const { data } = await axios.post(`${basic}`, dataToSend);
       setProduct(data);
-      console.log("Data submitted successfully:", data);
+      console.log(data, "data");
 
-      // Reset form fields and count
       reset({
         haircut: "",
         defaultOption: "By default",
         num: 0,
         hour: "1h",
         minute: "1m",
-        number: 0, // Reset number to 0
+        number: count,
         from: undefined,
         to: undefined,
       });
 
-      // Reset the count manually
       setCount(0);
     } catch (error) {
-      console.error(error);
+      console.error("Error submitting form:", error);
     }
   };
 
@@ -69,7 +67,7 @@ const BasicSettings = () => {
         setProduct(response.data);
         console.log("Fetched product:", response.data);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching product:", error);
       }
     };
 
@@ -77,130 +75,158 @@ const BasicSettings = () => {
   }, []);
 
   return (
-    <>
-      <section>
-        <div className="container">
-          <p>Основные настройки</p>
-          <nav>
-            <Link href="/service/servicepage/advancedsettings">
-              Расширенные настройки
-            </Link>
-            <br />
-            <Link href="/service/servicepage/basicsettings">
-              Основные настройки
-            </Link>
-            <br />
-            <Link href="/service/servicepage/onlinebooking">Онлайн-запись</Link>
-          </nav>
-        </div>
-      </section>
+    <div className={scss.start}>
+      <Navbar />
+      <div>
+        <section className={scss.headerNav}>
+          <div className="container">
+            <p>Основные настройки</p>
+            <nav className={scss.nav}>
+              <Link href="/service/servicepage/advancedsettings">
+                <p> Расширенные настройки</p>
+              </Link>
+              <br />
+              <Link href="/service/servicepage/basicsettings">
+                <p className={scss.headerLine}> Основные настройки</p>
+              </Link>
+              <br />
+              <Link href="/service/servicepage/onlinebooking">
+                <p>Онлайн-запись</p>
+              </Link>
+            </nav>
+          </div>
+        </section>
 
-      <section>
-        <div className="container">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className={scss.form_mathers}>
-              <div className={scss.form_inputs}>
-                <label htmlFor="haircut">Name</label>
-                <input
-                  id="haircut"
-                  {...register("haircut", { required: true })}
-                  placeholder="e.g. Haircut"
-                />
-              </div>
-
-              <div className={scss.form_inputs}>
-                <label htmlFor="category">Category</label>
-                <select
-                  id="category"
-                  {...register("defaultOption", { required: true })}
-                  defaultValue="By default"
-                >
-                  <option value="By default">By default</option>
-                </select>
-              </div>
-
-              <div className={scss.form_buttons}>
-                {!showRangeInput ? (
+        <section>
+          <div className="container">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className={scss.form_mathers}>
+                <div className={scss.form_inputs}>
+                  <h1>Name</h1>
                   <input
-                    {...register("num", { required: true })}
-                    type="number"
-                    placeholder="Number"
-                    defaultValue="0"
+                    id="haircut"
+                    {...register("haircut", { required: true })}
+                    placeholder="e.g. Haircut"
                   />
-                ) : (
-                  <div className={scss.form_counts}>
-                    <input
-                      {...register("from", { required: showRangeInput })}
-                      type="number"
-                      placeholder="From"
-                      defaultValue="0"
-                    />
-                    <input
-                      {...register("to", { required: showRangeInput })}
-                      type="number"
-                      placeholder="To"
-                      defaultValue="0"
-                    />
-                  </div>
-                )}
-                <input
-                  type="radio"
-                  onClick={() => setShowRangeInput(!showRangeInput)}
-                />
-              </div>
+                </div>
 
-              <div className={scss.form_inputs}>
-                <label htmlFor="hour">Hour</label>
-                <select
-                  id="hour"
-                  {...register("hour", { required: true })}
-                  defaultValue="1h"
-                >
-                  <option value="1h">1h</option>
-                  <option value="2h">2h</option>
-                </select>
+                <div className={scss.form_inputs_sector1}>
+                  <h1>Category</h1>
+                  <select
+                    id="category"
+                    {...register("defaultOption", { required: true })}
+                    defaultValue="By default"
+                  >
+                    <option value="By default">By default</option>
+                  </select>
+                </div>
 
-                <label htmlFor="minute">Minute</label>
-                <select id="minute" {...register("minute", { required: true })}>
-                  <option value="1m">1 minute</option>
-                  <option value="2m">2 minutes</option>
-                </select>
-              </div>
-
-              <input type="hidden" {...register("number")} value={count} />
-              <div className={scss.form_buttons}>
-                <input
-                  type="radio"
-                  onClick={() => setShowMembershipDebit(!showMembershipDebit)}
-                />
-                {showMembershipDebit && (
-                  <div className={scss.form_counts}>
-                    <h1>Automatic debiting from memberships</h1>
-                    <div className={scss.count}>
-                      <button
-                        type="button"
-                        onClick={() => setCount((c) => c + 1)}
-                      >
-                        +
-                      </button>
-                      <h1>{count}</h1>
-                      <button
-                        type="button"
-                        onClick={() => setCount((c) => (c > 0 ? c - 1 : 0))}
-                      >
-                        -
-                      </button>
+                <div className={scss.box}>
+                  <h1>Базовая цена</h1>
+                  <div className={scss.form_buttons}>
+                    {!showRangeInput ? (
+                      <input
+                        {...register("num", { required: true })}
+                        type="number"
+                        placeholder="Number"
+                        defaultValue="0"
+                      />
+                    ) : (
+                      <div className={scss.form_counts}>
+                        <input
+                          {...register("from", { required: showRangeInput })}
+                          type="number"
+                          placeholder="From"
+                          defaultValue="0"
+                        />
+                        <input
+                          {...register("to", { required: showRangeInput })}
+                          type="number"
+                          placeholder="To"
+                          defaultValue="0"
+                        />
+                      </div>
+                    )}
+                    <div className={scss.checkbox}>
+                      <input
+                        type="checkbox"
+                        onClick={() => setShowRangeInput(!showRangeInput)}
+                      />
+                      <p>Укажите базовый ценовой диапазон</p>
                     </div>
                   </div>
-                )}
-                <h1>Automatic debiting from memberships</h1>
-                <button type="submit">Create</button>
+                </div>
+
+                <div className={scss.form_inputs_sector3}>
+                  <h1>Продолжительность</h1>
+                  <select
+                    className={scss.select2}
+                    id="hour"
+                    {...register("hour", { required: true })}
+                    defaultValue="1h"
+                  >
+                    <option value="1h">1h</option>
+                    <option value="2h">2h</option>
+                  </select>
+
+                  <select
+                    id="minute"
+                    {...register("minute", { required: true })}
+                  >
+                    <option value="1m">1 minute</option>
+                    <option value="2m">2 minutes</option>
+                  </select>
+                </div>
+
+                <input type="hidden" {...register("number")} value={count} />
+                <div className={scss.form_buttons}>
+                  <h1>Booking type</h1>
+                  <div className={scss.block}>
+                    <input
+                      type="radio"
+                      onClick={() =>
+                        setShowMembershipDebit(!showMembershipDebit)
+                      }
+                    />
+                    <div className={scss.boxsecrey}>
+                      {showMembershipDebit && (
+                        <div className={scss.form_counts}>
+                          <div className={scss.count}>
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setCount((c) => (c > 0 ? c - 1 : 0))
+                              }
+                            >
+                              -
+                            </button>
+
+                            <h1>{count}</h1>
+
+                            <button
+                              type="button"
+                              onClick={() => setCount((c) => c + 1)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className={scss.line}></div>
+                <div className={scss.save}>
+                  <button className={scss.create} type="submit">
+                    create
+                  </button>
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
-      </section>
-    </>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
   );
 };
 

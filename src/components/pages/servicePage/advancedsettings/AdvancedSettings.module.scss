@@ -1,51 +1,209 @@
-.form_mathers {
+.start {
   display: flex;
-  flex-direction: column;
-  padding: 20px 200px;
-  border-radius: 20px;
-  gap: 20px;
-  justify-content: center;
-  .form_inputs {
-    font-size: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    h1 {
-    }
+  .headerNav {
+    padding: 40px 200px;
 
-    input {
-      width: 385px;
-      height: 40px;
-      border-radius: 10px;
-      padding: 5px;
-    }
+    .nav {
+      display: flex;
+      gap: 20px;
+      border-bottom: solid 1px rgb(224, 224, 224);
 
-    select {
-      width: 400px;
-      height: 50px;
-      border-radius: 10px;
-      padding: 5px;
-    }
-
-    option {
-      background: red;
-      width: 400px;
-      height: 50px;
-      border-radius: 10px;
-      padding: 5px;
+      p {
+        color: black;
+        padding: 20px 0;
+      }
+      .headerLine {
+        border-bottom: solid 5px rgb(236, 193, 0);
+      }
     }
   }
-  .form_buttons {
+  .form_mathers {
     display: flex;
     flex-direction: column;
-    align-items: end;
-  }
-  .count {
-    display: flex;
-    justify-content: end;
-    background: red;
+    padding: 20px 200px;
+    border-radius: 20px;
+    gap: 20px;
+    justify-content: center;
+    .title {
+      font-size: 26px;
+      font-weight: 500;
+      padding: 20px 0;
+    }
+    .form_inputs {
+      font-size: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 600px;
+      h1 {
+        font-size: 16px;
+        font-weight: 500;
+      }
 
-    button {
+      input {
+        width: 350px;
+        height: 50px;
+        border-radius: 10px;
+        padding: 0 10px;
+        border: solid 1px rgb(224, 224, 224);
+        background: white;
+        outline: none;
+      }
+      input:focus {
+        border: solid 1px rgb(236, 193, 0);
+      }
+
+      select {
+        width: 374px;
+        height: 50px;
+        border-radius: 10px;
+        padding: 0 10px;
+        border: solid 1px rgb(224, 224, 224);
+        background: white;
+      }
+      select:focus {
+        border: solid 1px rgb(236, 193, 0);
+      }
+
+      option {
+        border-radius: 10px;
+        padding: 0 10px;
+        border: solid 1px rgb(224, 224, 224);
+      }
+    }
+
+    .line {
+      width: 100%;
+      height: 1px;
+      margin-top: 30px;
+      background: rgb(224, 224, 224);
+    }
+
+    .box {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      padding: 20px;
+      background-image: url("../../../../assets/images//notifications-background.webp");
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      h2 {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      p {
+        width: 500px;
+        color: rgb(112, 112, 112);
+      }
+    }
+    .form_buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      .form_buttons_box {
+        display: flex;
+        gap: 100px;
+
+        //////////
+
+        .toggle-switch {
+          width: 50px;
+          height: 25px;
+          background-color: lightgray;
+          border-radius: 25px;
+          border: none;
+          position: relative;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          justify-content: flex-start;
+          padding: 0;
+        }
+
+        .on {
+          background-color: rgb(255, 196, 0);
+        }
+
+        .toggle-knob {
+          width: 20px;
+          height: 20px;
+          background-color: white;
+          border-radius: 50%;
+          position: absolute;
+          left: 2.5px;
+          transition: transform 0.3s ease;
+        }
+
+        .on .toggle-knob {
+          transform: translateX(25px);
+        }
+
+        ///
+
+        .block {
+          h1 {
+            font-size: 16px;
+            font-weight: 500;
+          }
+          p {
+            color: rgb(112, 112, 112);
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+    .form_counts {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 50px;
+
+      .count {
+        display: flex;
+        justify-content: center;
+        gap: 4px;
+        align-items: center;
+        background: rgb(255, 255, 255);
+        padding: 4px;
+        border-radius: 10px;
+        border: solid 1px rgb(224, 224, 224);
+
+        button {
+          padding: 0 10px;
+          border: none;
+          background: white;
+          font-size: 20px;
+          color: rgb(112, 112, 112);
+        }
+        h1 {
+          font-weight: 400;
+        }
+      }
+
+      .form_box {
+        p {
+          color: rgb(112, 112, 112);
+        }
+      }
+    }
+
+    .save {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      width: 100%;
+      .create {
+        margin-top: 20px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        background: rgb(255, 187, 0);
+        font-size: 18px;
+      }
     }
   }
 }
