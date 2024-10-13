@@ -35,7 +35,7 @@ const SignIn = () => {
         <div className="container">
           <div className={styles.Header}>
             <Image src={loginImage} alt="img" />
-            <Link href={"/auth/signup"}>Sign in</Link>
+            <Link href={"/auth/signup"}>Sign up</Link>
           </div>
         </div>
         <hr />
