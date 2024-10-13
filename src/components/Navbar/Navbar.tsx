@@ -8,10 +8,12 @@ import NavbarSettings from "./NavbarSettings/NavbarSettings";
 const Navbar = () => {
   return (
     <div className={s.navbar}>
-      <NavBarHead />
-      <CalendarSwiper />
-      <NavbarNavigation />
-      <NavbarSettings />
+      <div className={s.header}>
+        <NavBarHead />
+        <CalendarSwiper />
+        <NavbarNavigation />
+        <NavbarSettings />
+      </div>
     </div>
   );
 };

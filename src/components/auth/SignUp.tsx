@@ -23,7 +23,7 @@ const SignIn = () => {
   const [accepted, setAccepted] = useState(false);
   const [value, setValue] = useState("");
   const route = useRouter();
-  const { register, handleSubmit } = useForm<IInputComponentProps>();
+  const { register, handleSubmit, reset } = useForm<IInputComponentProps>();
 
   const PhoneInputComponent = ({}: IInputComponentProps) => (
     <PhoneInput defaultCountry="kg" value={value} className={"phone-input"} />
@@ -36,6 +36,8 @@ const SignIn = () => {
         data
       );
       console.log(responseData);
+      reset();
+      alert("Пользователь успешно за регицтраван");
     } catch (e) {
       const error = e as AxiosError;
       console.log(error.response?.data);
