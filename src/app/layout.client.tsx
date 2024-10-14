@@ -1,5 +1,6 @@
 "use client";
-import SessionProvider from "@/provider/SessionProvider";
+import ReduxProvider from "@/provider/ReduxProvider";
+import { SessionProvider } from "@/provider/SessionProvider";
 import React, { FC, ReactNode } from "react";
 
 interface LayoutClientType {
@@ -7,7 +8,11 @@ interface LayoutClientType {
 }
 
 const LayoutClient: FC<LayoutClientType> = ({ children }) => {
-  return <SessionProvider>{children}</SessionProvider>;
+  return (
+    <ReduxProvider>
+      <SessionProvider>{children}</SessionProvider>
+    </ReduxProvider>
+  );
 };
 
 export default LayoutClient;

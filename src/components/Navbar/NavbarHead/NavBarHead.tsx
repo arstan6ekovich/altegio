@@ -3,7 +3,6 @@ import s from "./NavbarHead.module.scss";
 import { TfiVimeoAlt } from "react-icons/tfi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
 
 interface UserType {
   createdAt: string;

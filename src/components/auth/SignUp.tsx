@@ -24,7 +24,6 @@ const SignIn = () => {
   const [value, setValue] = useState("");
   const route = useRouter();
   const { register, handleSubmit, reset } = useForm<IInputComponentProps>();
-
   const PhoneInputComponent = ({}: IInputComponentProps) => (
     <PhoneInput defaultCountry="kg" value={value} className={"phone-input"} />
   );

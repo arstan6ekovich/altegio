@@ -1,14 +1,41 @@
-"use client";
-import { store } from "@/redux/store";
-import React, { FC, ReactNode } from "react";
-import { Provider } from "react-redux";
+import { FC, ReactNode, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useGetUserAuthQuery } from "@/redux/api/auth";
 
-interface SessionType {
+interface SessionProviderProps {
   children: ReactNode;
 }
 
-const SessionProvider: FC<SessionType> = ({ children }) => {
-  return <Provider store={store}>{children}</Provider>;
-};
+export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
+  const { status } = useGetUserAuthQuery();
+  const pathname = usePathname();
+  const router = useRouter();
+  console.log(status);
 
-export default SessionProvider;
+  const handleNavigation = () => {
+    switch (pathname) {
+      case "/auth/signin":
+      case "/auth/signup":
+      case "/":
+        if (status === "fulfilled") {
+          router.push("/service");
+        }
+        break;
+      case "/service/servicepage/advancedsettings":
+      case "/service/servicepage/basicsettings":
+      case "/service/servicepage/onlinebooking":
+      case "/service":
+        if (status === "rejected") {
+          router.push("/auth/signin");
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    handleNavigation();
+  }, [status, pathname, router]);
+  return children;
+};

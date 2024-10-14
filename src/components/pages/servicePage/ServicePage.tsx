@@ -1,7 +1,7 @@
 "use client";
 import Navbar from "@/components/Navbar/Navbar";
 import Link from "next/link";
-import React, { IframeHTMLAttributes, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from "./ServicePage.module.scss";
 import { MdMenu } from "react-icons/md";
 import { IoSearchOutline } from "react-icons/io5";
@@ -192,7 +192,7 @@ export function ServiceCategoryLists() {
       try {
         const response = await axios.get(basic!);
         setProduct(response.data);
-        dispatch((response.data));
+        dispatch(response.data);
         console.log("Fetched data: ", response.data);
       } catch (e) {
         const error = e as AxiosError;

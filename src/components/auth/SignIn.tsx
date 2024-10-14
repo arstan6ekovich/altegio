@@ -7,6 +7,7 @@ import loginImage from "@/assets/images/signin_img.svg";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
+import { usePostUserSigninMutation } from "@/redux/api/auth";
 
 interface SigninType {
   email: string;
@@ -16,12 +17,10 @@ interface SigninType {
 const SignIn = () => {
   const route = useRouter();
   const { register, handleSubmit } = useForm<SigninType>();
+  const [postUserSigninMutation] = usePostUserSigninMutation();
   const onSubmit: SubmitHandler<SigninType> = async (data) => {
     try {
-      const { data: responseData } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API}/auth/sign-in`,
-        data
-      );
+      const { data: responseData } = await postUserSigninMutation(data);
       localStorage.setItem("user", JSON.stringify(responseData.accessToken));
       route.push(`/service`);
     } catch (e) {
