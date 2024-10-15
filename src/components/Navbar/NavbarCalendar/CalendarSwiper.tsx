@@ -19,6 +19,12 @@ const CalendarSwiper = () => {
   );
 
   const swiperRef = useRef<SwiperCore | null>(null);
+  
+  // Get today's date
+  const today = new Date();
+  const todayMonth = today.getMonth();
+  const todayYear = today.getFullYear();
+  const todayDate = today.getDate();
 
   const months: string[] = [
     "January",
@@ -115,7 +121,16 @@ const CalendarSwiper = () => {
                 {renderCalendarDays(currentMonth, currentYear).map(
                   (day, index) =>
                     day ? (
-                      <div className={s.dayCell} key={index}>
+                      <div
+                        className={`${s.dayCell} ${
+                          currentMonth === todayMonth &&
+                          currentYear === todayYear &&
+                          day === todayDate
+                            ? s.currentDay
+                            : ""
+                        }`}
+                        key={index}
+                      >
                         {day}
                       </div>
                     ) : (
