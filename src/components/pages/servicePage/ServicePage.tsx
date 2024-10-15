@@ -182,25 +182,20 @@ export function ServiceCategoryLists() {
     locationSettings: string;
     number: number;
   }
+
   const [product, setProduct] = useState<IFormInput[]>([]);
   const [isEdit, setIsEdit] = useState<number | null>(null);
   const { register, handleSubmit } = useForm<IFormInput>();
   const { treu, search } = useAppSelector((s) => s.main);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(basic!);
-        setProduct(response.data);
-        dispatch(response.data);
-        console.log("Fetched data: ", response.data);
-      } catch (e) {
-        const error = e as AxiosError;
-        console.log(error.response?.data);
-      }
-    };
-    fetchData();
-  }, []);
+
+  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
+
+  const handleCheckboxChange = (id: number) => {
+    setCheckedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id], 
+    }));
+  };
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
@@ -238,57 +233,7 @@ export function ServiceCategoryLists() {
                         placeholder="First Name"
                       />
                     </div>
-
-                    <div className={scss.form_inputs}>
-                      <h1>Taxation system</h1>
-                      <select
-                        {...register("defaultOption", { required: true })}
-                        defaultValue="By default"
-                      >
-                        <option value="By default">By default</option>
-                      </select>
-                    </div>
-
-                    <div className={scss.form_inputs}>
-                      <h1>VAT</h1>
-                      <select
-                        {...register("secondOption", { required: true })}
-                        defaultValue="By default"
-                      >
-                        <option value="By default">By default</option>
-                      </select>
-                    </div>
-                    <div className={scss.form_inputs}>
-                      <h1>Return visit notification</h1>
-                      <select
-                        {...register("locationSettings", { required: true })}
-                        defaultValue="Use general location settings"
-                      >
-                        <option value="Use general location settings">
-                          Use general location settings
-                        </option>
-                        <option value="Do not send after the visit">
-                          Do not send after the visit
-                        </option>
-                        <option value="1 day after the visit">
-                          1 day after the visit
-                        </option>
-                        <option value="2 day after the visit">
-                          2 days after the visit
-                        </option>
-                        <option value="3 day after the visit">
-                          3 days after the visit
-                        </option>
-                      </select>
-                    </div>
-                    <input type="hidden" {...register("number")} />
-                    <div className={scss.form_buttons}>
-                      <button type="button"> add </button>
-                      <h1>Automatic debiting from memberships</h1>
-
-                      <button type="submit">create</button>
-                      <button onClick={() => setIsEdit(null)}>Cancel</button>
-                    </div>
+                   
                   </div>
                 </form>
               </>
@@ -305,8 +250,15 @@ export function ServiceCategoryLists() {
                 </div>
                 <div className={s.categoryListContent}>
                   <div className={s.categoryBook}>
-                    <div className={s.categoryBookCheck}>
-                      <div className={s.categoryBookCheckBox}></div>
+                    <div
+                      className={s.categoryBookCheck}
+                      onClick={() => handleCheckboxChange(item._id)}
+                    >
+                      <div
+                        className={`${s.categoryBookCheckBox} ${
+                          checkedItems[item._id] ? s.checked : ""
+                        }`}
+                      ></div>
                     </div>
                     <span>На</span>
                   </div>
@@ -332,7 +284,7 @@ export function ServiceCategoryLists() {
             padding: "50px 0",
           }}
         >
-          Нет такое данные
+          Нет такие данные
         </h1>
       ) : (
         <button
@@ -349,5 +301,4 @@ export function ServiceCategoryLists() {
     </div>
   );
 }
-
 export default ServicePage;

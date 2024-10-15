@@ -20,7 +20,6 @@ const CalendarSwiper = () => {
 
   const swiperRef = useRef<SwiperCore | null>(null);
   
-  // Get today's date
   const today = new Date();
   const todayMonth = today.getMonth();
   const todayYear = today.getFullYear();
