@@ -1,0 +1,77 @@
+.modalNewService {
+  width: 554px;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 25%;
+  z-index: 99;
+  left: 40%;
+  padding: 20px 35px;
+  span {
+    position: absolute;
+    top: 10px;
+    font-size: 38px;
+    color: rgb(165, 161, 161);
+    right: 10px;
+    cursor: pointer;
+  }
+  h1 {
+    font-size: 24px;
+    margin: 20px 0 52px 0;
+    text-align: center;
+    color: #2b3134;
+  }
+  label {
+    display: flex;
+    margin-bottom: 20px;
+    flex-direction: column;
+    color: #999ea7;
+    gap: 8px;
+    input {
+      border: 1px solid rgb(158, 152, 152);
+      border-radius: 12px;
+      height: 48px;
+      padding: 0 12px;
+      outline: none;
+      font-size: 16px;
+    }
+    ::placeholder {
+      color: rgba(177, 175, 175, 0.836);
+    }
+  }
+  .modalNewServiceCheck {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #71757f;
+    input {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+    }
+  }
+  .modalNewServiceBtns {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    button {
+      width: 50%;
+      height: 46px;
+      background: 0;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    :first-child {
+      border: 1px solid #ffcb00;
+    }
+    :last-child {
+      background-color: #ffcb00;
+      border: none;
+    }
+  }
+}

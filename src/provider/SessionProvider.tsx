@@ -1,5 +1,6 @@
 import { FC, ReactNode, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+
 import { useGetUserAuthQuery } from "@/redux/api/auth";
 
 interface SessionProviderProps {

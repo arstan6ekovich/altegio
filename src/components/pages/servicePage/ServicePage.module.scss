@@ -285,3 +285,12 @@
     transform: translateX(-15px); 
   }
 }
+
+.bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background: #08080893;
+  z-index: 12;
+}

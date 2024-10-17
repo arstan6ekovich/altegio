@@ -1,13 +1,15 @@
 "use client";
-import React from "react";
-import styles from "./SignIn.module.scss";
-import Image from "next/image";
-import Link from "next/link";
-import loginImage from "@/assets/images/signin_img.svg";
-import { useRouter } from "next/navigation";
+
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios, { AxiosError } from "axios";
+
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import loginImage from "@/assets/images/signin_img.svg";
+import styles from "./SignIn.module.scss";
 import { usePostUserSigninMutation } from "@/redux/api/auth";
+import { useRouter } from "next/navigation";
 
 interface SigninType {
   email: string;
@@ -25,7 +27,7 @@ const SignIn = () => {
       route.push(`/service`);
     } catch (e) {
       const error = e as AxiosError;
-      console.log(error.response?.data);
+      console.log(error.response?.data, 'data rejected');
     }
   };
   return (

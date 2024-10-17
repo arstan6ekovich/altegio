@@ -1,25 +1,30 @@
 "use client";
-import Navbar from "@/components/Navbar/Navbar";
-import Link from "next/link";
+
+import { AddSearch, AddTrue } from "@/redux/slices/ProductSlice";
 import React, { useEffect, useState } from "react";
-import s from "./ServicePage.module.scss";
-import { MdMenu } from "react-icons/md";
-import { IoSearchOutline } from "react-icons/io5";
-import { IoIosArrowDown } from "react-icons/io";
-import { MdOutlineModeEdit } from "react-icons/md";
-import { FaRegUserCircle } from "react-icons/fa";
-import axios, { AxiosError } from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
+import axios, { AxiosError } from "axios";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+
+import { FaRegUserCircle } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoSearchOutline } from "react-icons/io5";
+import Link from "next/link";
+import { MdMenu } from "react-icons/md";
+import { MdOutlineModeEdit } from "react-icons/md";
+import ModalNewService from "./modalNewService/ModalNewService";
+import Navbar from "@/components/Navbar/Navbar";
+import s from "./ServicePage.module.scss";
 import scss from "./ServicePage.module.scss";
 import { useDispatch } from "react-redux";
-import { AddSearch, AddTrue } from "@/redux/slices/ProductSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+
 const basic = process.env.NEXT_PUBLIC_ALTEGIO;
 
 const ServicePage = () => {
   const [showCreateList, setShowCreateList] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [product, setProduct] = useState<IFormInput[]>([]);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const dispatch = useDispatch();
   const openCreateList = () => {
     setShowCreateList((prev) => !prev);
@@ -53,6 +58,10 @@ const ServicePage = () => {
   const filteredProducts = product.filter((el) =>
     el.firstName.toLowerCase().includes(searchTerm)
   );
+
+  const openHandleModal = () => {
+    setOpenModal(true)
+  };
 
   dispatch(AddSearch(filteredProducts));
 
@@ -92,7 +101,7 @@ const ServicePage = () => {
               </button>
               {showCreateList ? (
                 <ul className={s.createServiceCard}>
-                  <li>Создать категорию</li>
+                  <li onClick={openHandleModal}>Создать категорию</li>
                   <li>Создать услугу</li>
                 </ul>
               ) : null}
@@ -101,6 +110,8 @@ const ServicePage = () => {
         </div>
         <ServiceCategories />
       </div>
+      {openModal && <ModalNewService setCloseModal={setOpenModal} />}
+      {openModal && <div className={s.bg}></div>}
     </div>
   );
 };
@@ -188,12 +199,14 @@ export function ServiceCategoryLists() {
   const { register, handleSubmit } = useForm<IFormInput>();
   const { treu, search } = useAppSelector((s) => s.main);
 
-  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
+  const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>(
+    {}
+  );
 
   const handleCheckboxChange = (id: number) => {
     setCheckedItems((prev) => ({
       ...prev,
-      [id]: !prev[id], 
+      [id]: !prev[id],
     }));
   };
 
@@ -233,7 +246,6 @@ export function ServiceCategoryLists() {
                         placeholder="First Name"
                       />
                     </div>
-                   
                   </div>
                 </form>
               </>
