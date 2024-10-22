@@ -18,17 +18,52 @@ import s from "./ServicePage.module.scss";
 import scss from "./ServicePage.module.scss";
 import { useDispatch } from "react-redux";
 
+interface ICategory {
+  clinic: number
+  name: string
+}
+
 const basic = process.env.NEXT_PUBLIC_ALTEGIO;
 
 const ServicePage = () => {
   const [showCreateList, setShowCreateList] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [product, setProduct] = useState<IFormInput[]>([]);
+  const [category, setCategory] = useState<ICategory[]>([])
   const [openModal, setOpenModal] = useState<boolean>(false);
   const dispatch = useDispatch();
   const openCreateList = () => {
     setShowCreateList((prev) => !prev);
   };
+
+  const getCategory = async () => {
+    try {
+      const { data } = await axios("http://185.245.182.159/api/service-categories/");
+      console.log(data, 'data');
+      setCategory(data)
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'X-CSRFTOKEN': 'Romott4daKFShDb1FnhJSEkwXGPZTbuvDDBZw8DeaAufrI7KDYQLMa4x5BfsB9X1'
+  };  
+
+  const postClinic = (payload:any) => {
+    axios.post("http://185.245.182.159/api/service-categories/", payload, { headers })
+  .then(response => {
+    console.log('Status Code:', response.status);
+    console.log('Response:', response.data);
+  })
+  .catch(error => {
+    console.error('Error:', error.response ? error.response.data : error.message);
+  });
+  }
+  
   interface IFormInput {
     _id: number;
     firstName: string;
@@ -48,6 +83,7 @@ const ServicePage = () => {
         console.log(e);
       }
     }
+    getCategory()
     fetchProduct();
   }, []);
 
@@ -108,15 +144,20 @@ const ServicePage = () => {
             </div>
           </div>
         </div>
-        <ServiceCategories />
+        {
+          category.map((item, id) => (
+            <ServiceCategories item={item} key={id}/>
+          ))
+        }
+        
       </div>
-      {openModal && <ModalNewService setCloseModal={setOpenModal} />}
+      {openModal && <ModalNewService setCloseModal={setOpenModal} postClinic={postClinic} />}
       {openModal && <div className={s.bg}></div>}
     </div>
   );
 };
 
-export function ServiceCategories() {
+export function ServiceCategories({item}) {
   const [product, setProduct] = useState([]);
   const [mar, setMar] = useState(false);
   const dispatch = useDispatch();
@@ -168,7 +209,7 @@ export function ServiceCategories() {
             }}
           />
           <div className={s.serviceCategoriesTitle}>
-            <h3>{users}</h3>
+            <h3>{item.name}</h3>
             <h4>Содержить услуги: {product.length}</h4>
           </div>
         </div>
