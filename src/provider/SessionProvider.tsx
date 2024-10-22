@@ -17,7 +17,7 @@ export const SessionProvider: FC<SessionProviderProps> = ({ children }) => {
     switch (pathname) {
       case "/auth/signin":
       case "/auth/signup":
-      case "/":
+      case "/service":
         if (status === "fulfilled") {
           router.push("/service");
         }
